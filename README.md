@@ -4,7 +4,7 @@
 
 ---
 
-## 🌐 Live Demo [View Live Website](https://bangla-news24-one.vercel.app/)
+## 🌐 [View Live Website](https://bangla-news24-one.vercel.app/)
 
 ---
 
