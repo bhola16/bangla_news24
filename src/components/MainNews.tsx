@@ -12,10 +12,7 @@ const MainNews = ({ news }: { news: INews[] }) => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* Main News */}
-      <Link
-        href={`/news/${firstNews.id}`}
-        className="group block"
-      >
+      <Link href={`/news/${firstNews.id}`} className="group block">
         <article className="card h-full overflow-hidden bg-base-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           {/* Image */}
           {firstNews.imageUrl && (
@@ -43,14 +40,10 @@ const MainNews = ({ news }: { news: INews[] }) => {
             </h2>
 
             {/* Description */}
-            <p className="text-gray-600">
-              {firstNews.description}
-            </p>
+            <p className="text-gray-600">{firstNews.description}</p>
 
             {/* ID */}
-            <p className="mt-2 text-xs text-gray-400">
-              ID: {firstNews.id}
-            </p>
+            <p className="mt-2 text-xs text-gray-400">ID: {firstNews.id}</p>
 
             {/* Read More */}
             <div className="mt-2 flex items-center text-sm font-semibold text-gray-500 transition-colors duration-300 group-hover:text-red-600">
@@ -67,11 +60,7 @@ const MainNews = ({ news }: { news: INews[] }) => {
       {/* Other Main News */}
       <div className="grid gap-3">
         {otherNews.slice(0, 4).map((news) => (
-          <Link
-            key={news.id}
-            href={`/news/${news.id}`}
-            className="group block"
-          >
+          <Link key={news.id} href={`/news/${news.id}`} className="group block">
             <article className="h-full rounded-lg border border-gray-300 bg-base-100 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-300 hover:bg-red-50/30 hover:shadow-md">
               {/* Category */}
               <p className="text-sm font-semibold text-red-600 transition-colors duration-300 group-hover:text-red-700">
