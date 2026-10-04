@@ -1,27 +1,52 @@
 import { INews } from "@/types/Types";
 import Image from "next/image";
+import Link from "next/link";
 
 const NewsCard = ({ news }: { news: INews }) => {
   return (
-    <article className="card overflow-hidden bg-base-100 shadow-sm">
-      <figure>
-        <Image
-          src={news.imageUrl}
-          alt={news.imageAlt}
-          width={400}
-          height={250}
-          className="h-[180px] w-full object-cover"
-        />
-      </figure>
+    <Link href={`/news/${news.id}`} className="group block">
+      <article className="card h-full overflow-hidden border border-gray-200 bg-base-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg">
+        {/* Image */}
+        {news.imageUrl && (
+          <figure className="overflow-hidden">
+            <Image
+              src={news.imageUrl}
+              alt={news.imageAlt || news.title}
+              width={400}
+              height={250}
+              className="h-[180px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </figure>
+        )}
 
-      <div className="card-body p-4">
-        <p className="font-semibold text-red-600">{news.category}</p>
+        {/* Content */}
+        <div className="card-body p-4">
+          {/* Category */}
+          <p className="text-sm font-semibold text-red-600 transition-colors group-hover:text-red-700">
+            {news.category}
+          </p>
 
-        <h2 className="card-title text-lg">{news.title}</h2>
+          {/* Title */}
+          <h2 className="card-title line-clamp-2 text-lg leading-6 transition-colors group-hover:text-red-600">
+            {news.title}
+          </h2>
 
-        <p className="line-clamp-3 text-sm text-gray-600">{news.description}</p>
-      </div>
-    </article>
+          {/* Description */}
+          <p className="line-clamp-3 text-sm leading-6 text-gray-600">
+            {news.description}
+          </p>
+
+          {/* Read More */}
+          <div className="mt-2 flex items-center text-sm font-semibold text-gray-500 transition-colors group-hover:text-red-600">
+            <span>Read more</span>
+
+            <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </div>
+        </div>
+      </article>
+    </Link>
   );
 };
 

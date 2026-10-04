@@ -1,5 +1,4 @@
 import MainNews from "@/components/MainNews";
-import Marquee from "@/components/Marquee";
 import MostRead from "@/components/MostRead";
 import NewsCard from "@/components/NewsCard";
 import type { IOtherSection } from "@/types/Types";
@@ -20,9 +19,6 @@ export default async function Home() {
 
   return (
     <main>
-      {/* Latest News Marquee */}
-      <Marquee />
-
       {/* Main Content */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 px-5 py-10 md:grid-cols-3">
         {/* News Section */}

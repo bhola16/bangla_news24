@@ -1,4 +1,6 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Marquee from "@/components/Marquee";
 import type { Metadata } from "next";
 import { Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
@@ -26,7 +28,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Header></Header>
+        {/* Latest News Marquee */}
+        <Marquee />
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import type { IMostRead } from "@/types/Types";
+import Link from "next/link";
 
 const MostRead = async () => {
   const res = await fetch("https://news-api-v2.vercel.app/api/news/most-read");
@@ -20,22 +21,21 @@ const MostRead = async () => {
       {/* News List */}
       <div className="divide-y divide-gray-200">
         {news.map((n, i) => (
-          <article
-            key={n.id}
-            className="group flex gap-4 px-5 py-4 transition hover:bg-gray-50"
-          >
-            {/* Number */}
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-50">
-              <span className="text-lg font-bold text-red-600">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </div>
+          <Link key={n.id} href={`/news/${n.id}`} className="group block">
+            <article className="flex gap-4 px-5 py-4 transition hover:bg-gray-50">
+              {/* Number */}
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-50 transition group-hover:bg-red-100">
+                <span className="text-lg font-bold text-red-600">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
 
-            {/* Title */}
-            <h3 className="text-sm font-semibold leading-6 text-gray-800 transition group-hover:text-red-600">
-              {n.title}
-            </h3>
-          </article>
+              {/* Title */}
+              <h3 className="text-sm font-semibold leading-6 text-gray-800 transition group-hover:text-red-600">
+                {n.title}
+              </h3>
+            </article>
+          </Link>
         ))}
       </div>
     </aside>
