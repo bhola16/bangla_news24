@@ -1,31 +1,38 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import type { FormEvent } from "react";
+import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
 
 const SignUpPage = () => {
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const user = {
-      name: String(formData.get("name") ?? ""),
-      image: String(formData.get("image") ?? ""),
-      email: String(formData.get("email") ?? ""),
-      password: String(formData.get("password") ?? ""),
-    };
+    const name = String(formData.get("name") ?? "");
+    const image = String(formData.get("image") ?? "");
+    const email = String(formData.get("email") ?? "");
+    const password = String(formData.get("password") ?? "");
 
-    // console.log("Data from the Form:", user);
+    const { data, error } = await authClient.signUp.email({
+      name,
+      image,
+      email,
+      password,
+      callbackURL: "/",
+    });
 
-    const { data, error } = await authClient.signUp.email(user);
-
-    if (data) {
-      console.log("Signup successful: ", data);
+    // Sign up failed
+    if (error) {
+      toast.error(error.message || "Sign up failed.");
+      return;
     }
 
-    if (error) {
-      console.log("Error message:", error);
+    // Sign up successful
+    if (data) {
+      sessionStorage.setItem("signupSuccess", "true");
+      redirect("/");
     }
   };
 
@@ -51,6 +58,7 @@ const SignUpPage = () => {
               type="text"
               name="name"
               placeholder="Enter your name"
+              required
               className="input w-full border-gray-300 bg-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
             />
           </div>
@@ -79,6 +87,7 @@ const SignUpPage = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
+              required
               className="input w-full border-gray-300 bg-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
             />
           </div>
@@ -93,6 +102,7 @@ const SignUpPage = () => {
               type="password"
               name="password"
               placeholder="Enter your password"
+              required
               className="input w-full border-gray-300 bg-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
             />
           </div>
