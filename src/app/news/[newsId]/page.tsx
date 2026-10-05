@@ -11,7 +11,7 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
 
   const data = await res.json();
 
-  console.log("ARTICLE RESPONSE:", JSON.stringify(data, null, 2));
+  // console.log("ARTICLE RESPONSE:", JSON.stringify(data, null, 2));
 
   // The API may return the article directly or inside `data`
   const news: INewsDetails = data.data ?? data;

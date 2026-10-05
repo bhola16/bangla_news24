@@ -6,9 +6,6 @@ import "react-marquee-text/dist/styles.css";
 const Marquee = async () => {
   const res = await fetch("https://news-api-v2.vercel.app/api/news?limit=10");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch latest headlines");
-  }
 
   const data = await res.json();
   const headlines: IHeadlines[] = data.data ?? [];

@@ -4,9 +4,7 @@ import Link from "next/link";
 const MostRead = async () => {
   const res = await fetch("https://news-api-v2.vercel.app/api/news/most-read");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch most read news");
-  }
+  
 
   const data = await res.json();
   const news: IMostRead[] = data.data ?? [];
