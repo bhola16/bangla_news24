@@ -1,6 +1,7 @@
 import { INewsDetails, INewsDetailsProps } from "@/types/Types";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const NewsDetails = async ({ params }: INewsDetailsProps) => {
   const { newsId } = await params;
@@ -9,23 +10,24 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
     `https://news-api-v2.vercel.app/api/article/${newsId}`,
   );
 
-  const data = await res.json();
-
-  // console.log("ARTICLE RESPONSE:", JSON.stringify(data, null, 2));
-
-  // The API may return the article directly or inside `data`
-  const news: INewsDetails = data.data ?? data;
-
-  if (!news) {
-    throw new Error("News details not found");
+  if (!res.ok) {
+    notFound();
   }
 
-  const publishedDate = news.firstPublished
-    ? new Date(news.firstPublished).toLocaleString("bn-BD", {
-        dateStyle: "full",
-        timeStyle: "short",
-      })
-    : "Date not available";
+  const data = await res.json();
+
+  // The API may return the article directly or inside `data`
+  const news: INewsDetails | null = data?.data ?? data ?? null;
+
+  // News not found
+  if (!news) {
+    notFound();
+  }
+
+  const publishedDate = new Date(news.firstPublished).toLocaleString("bn-BD", {
+    dateStyle: "full",
+    timeStyle: "short",
+  });
 
   const mainImage = news.body?.find(
     (item) => item.type === "image" && item.url,
@@ -47,6 +49,11 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
         {news.title}
       </h1>
 
+      {/* Published Date */}
+      {publishedDate && (
+        <p className="mt-3 text-sm text-gray-500">{publishedDate}</p>
+      )}
+
       {/* Description */}
       {news.description?.blocks && (
         <div className="mt-5 text-lg leading-8 text-gray-600">
@@ -55,21 +62,6 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
           ))}
         </div>
       )}
-
-      {/* Reporter + Published Date */}
-      <div className="mt-6 flex flex-col gap-2 border-y py-4 text-sm text-gray-600 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <span className="font-semibold text-gray-900">Reporter:</span>{" "}
-          {news.byline?.length
-            ? news.byline.map((person) => person.name).join(", ")
-            : "Unknown"}
-        </div>
-
-        <div>
-          <span className="font-semibold text-gray-900">Published:</span>{" "}
-          {publishedDate}
-        </div>
-      </div>
 
       {/* Main Image */}
       {mainImage?.url && (
@@ -88,9 +80,7 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
       {/* News Body */}
       <article className="mt-8">
         {news.body?.map((item, index) => {
-          {
-            /* Image */
-          }
+          // Image
           if (item.type === "image" && item.url) {
             return (
               <figure key={index} className="my-8">
@@ -111,9 +101,7 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
             );
           }
 
-          {
-            /* Subheading */
-          }
+          // Subheading
           if (item.type === "subheading" && item.text) {
             return (
               <h2
@@ -125,9 +113,7 @@ const NewsDetails = async ({ params }: INewsDetailsProps) => {
             );
           }
 
-          {
-            /* Paragraph */
-          }
+          // Paragraph
           if (item.type === "text" && item.text) {
             return (
               <p
