@@ -1,9 +1,9 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Marquee from "@/components/Marquee";
+import ToastProvider from "@/components/ToastProvider";
 import type { Metadata } from "next";
 import { Noto_Serif_Bengali } from "next/font/google";
-import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 const notoSerifBengali = Noto_Serif_Bengali({
@@ -33,7 +33,7 @@ export default function RootLayout({
         <Marquee />
         {children}
         <Footer />
-        <ToastContainer />
+        <ToastProvider />
       </body>
     </html>
   );

@@ -1,20 +1,30 @@
 "use client";
 
-import { ToastContainer } from "react-toastify";
+import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ToastProvider = () => {
+export default function ToastProvider() {
+  useEffect(() => {
+    const loginSuccess = sessionStorage.getItem("loginSuccess");
+
+    if (loginSuccess === "true") {
+      // Remove first so it cannot show twice
+      sessionStorage.removeItem("loginSuccess");
+
+      // Small delay allows ToastContainer to mount first
+      setTimeout(() => {
+        toast.success("Signed in successfully!");
+      }, 100);
+    }
+  }, []);
+
   return (
     <ToastContainer
-      position="top-right"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop
+      position="bottom-right"
+      autoClose={2000}
       closeOnClick
       pauseOnHover
-      draggable
     />
   );
-};
-
-export default ToastProvider;
+}

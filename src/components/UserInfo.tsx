@@ -25,11 +25,17 @@ const UserInfoPage = () => {
       {user ? (
         <div className="flex items-center gap-3">
           {/* Profile Image */}
-          {user.image && (
-            <div className="avatar">
-              <div className="w-10 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-base-100">
-                <img src={user.image} alt={user.name || "User"} />
-              </div>
+          {user.image ? (
+            <div className="h-10 w-10 overflow-hidden rounded-full ring-2 ring-red-500 ring-offset-2 ring-offset-white">
+              <img
+                src={user.image}
+                alt={user.name || "User"}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 font-bold text-white">
+              {user.name?.charAt(0).toUpperCase()}
             </div>
           )}
 
@@ -46,7 +52,6 @@ const UserInfoPage = () => {
         </div>
       ) : (
         <div className="flex gap-2">
-          {/* Sign In */}
           <Link
             href="/signin"
             className="btn btn-sm border-gray-300 bg-white px-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-500 hover:bg-red-50 hover:text-red-600"
@@ -54,10 +59,9 @@ const UserInfoPage = () => {
             Sign In
           </Link>
 
-          {/* Sign Up */}
           <Link
             href="/signup"
-            className="btn btn-sm border-red-600 bg-red-600 px-4 text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-red-700 hover:bg-red-700"
+            className="btn btn-sm border-red-600 bg-red-600 px-4 text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-red-700"
           >
             Sign Up
           </Link>
