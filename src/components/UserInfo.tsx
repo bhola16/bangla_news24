@@ -26,13 +26,17 @@ const UserInfoPage = () => {
         <div className="flex items-center gap-3">
           {/* Profile Image */}
           {user.image ? (
-            <div className="h-10 w-10 overflow-hidden rounded-full ring-2 ring-red-500 ring-offset-2 ring-offset-white">
-              <img
-                src={user.image}
-                alt={user.name || "User"}
-                className="h-full w-full object-cover"
-              />
-            </div>
+            <Link
+            href={'/profile'}
+            >
+              <div className="h-10 w-10 overflow-hidden rounded-full ring-2 ring-red-500 ring-offset-2 ring-offset-white">
+                <img
+                  src={user.image}
+                  alt={user.name || "User"}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </Link>
           ) : (
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 font-bold text-white">
               {user.name?.charAt(0).toUpperCase()}

@@ -42,6 +42,15 @@ const SignInPage = () => {
       callbackURL: "/",
     });
   };
+  // GitHub Sign In
+  const handleGitHubSignIn = async () => {
+    sessionStorage.setItem("loginSuccess", "true");
+
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: "/",
+    });
+  };
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center gap-3 px-4 py-10">
@@ -103,6 +112,14 @@ const SignInPage = () => {
         className="btn w-full max-w-md border-gray-300 bg-white text-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-500 hover:bg-red-50 hover:text-red-600"
       >
         Sign In With Google
+      </button>
+      {/* GitHub Sign In */}
+      <button
+        type="button"
+        onClick={handleGitHubSignIn}
+        className="btn w-full max-w-md border-gray-300 bg-white text-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-500 hover:bg-red-50 hover:text-red-600"
+      >
+        Sign In With GitHub
       </button>
     </div>
   );

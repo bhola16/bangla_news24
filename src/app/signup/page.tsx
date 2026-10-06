@@ -1,7 +1,6 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
 const SignUpPage = () => {
@@ -32,12 +31,36 @@ const SignUpPage = () => {
     // Sign up successful
     if (data) {
       sessionStorage.setItem("signupSuccess", "true");
-      redirect("/");
+      window.location.href = "/";
+    }
+  };
+
+  // Google Sign Up
+  const handleGoogleSignUp = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(error.message || "Google sign up failed.");
+    }
+  };
+
+  // GitHub Sign Up
+  const handleGitHubSignUp = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "github",
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(error.message || "GitHub sign up failed.");
     }
   };
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4 py-10">
+    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-3 px-4 py-10">
       <form onSubmit={onSubmit} className="w-full max-w-md">
         <fieldset className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg sm:p-8">
           <legend className="flex px-2 text-2xl font-bold text-gray-900">
@@ -107,7 +130,7 @@ const SignUpPage = () => {
             />
           </div>
 
-          {/* Submit Button */}
+          {/* Email Sign Up */}
           <button
             type="submit"
             className="btn mt-6 w-full border-red-600 bg-red-600 text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-red-700 hover:bg-red-700 hover:shadow-md"
@@ -116,6 +139,24 @@ const SignUpPage = () => {
           </button>
         </fieldset>
       </form>
+
+      {/* Google Sign Up */}
+      <button
+        type="button"
+        onClick={handleGoogleSignUp}
+        className="btn w-full max-w-md border-gray-300 bg-white text-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-500 hover:bg-red-50 hover:text-red-600"
+      >
+        Sign Up With Google
+      </button>
+
+      {/* GitHub Sign Up */}
+      <button
+        type="button"
+        onClick={handleGitHubSignUp}
+        className="btn w-full max-w-md border-gray-300 bg-white text-gray-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-500 hover:bg-red-50 hover:text-red-600"
+      >
+        Sign Up With GitHub
+      </button>
     </div>
   );
 };
