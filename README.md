@@ -6,13 +6,9 @@ The application fetches real-time news data from a REST API and provides users w
 
 ## 🌐 Live Demo
 
-**Live Website:** [View](https://bangla-news-24-taupe.vercel.app/)
+**Vercel** [Live Website:](https://bangla-news-24-taupe.vercel.app/)
 
-**GitHub Repository:**
-`https://github.com/your-username/bangla-news-24`
-
-> Replace the GitHub URL above with your actual repository URL.
-
+**GitHub** [Visit Repository](https://github.com/bhola16/bangla_news24)
 ---
 
 ## ✨ Features
